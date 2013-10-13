@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script> 
+
+    <script>
+
+      $(document).ready(function(){
+
+        $("button.insecure").click(function(){
+          $("#foobar1").html('Hi ' + $('#lol').val() + '!');
+        });
+
+        $("button.secure, a.secure").click(function(){
+          $("#foobar2").text('Hi ' + $('#lol').val() + '!');
+        });
+
+      });
+
+    </script>
+  </head>
+  <body>
+
+    <p>Welcome to this XSS test</p>
+
+    <label for="lol">Type your name:</label>
+    <input id="lol" type="text" placeholder="John">
+    <button class="insecure">Say insecure Hi</button>
+    <button class="secure">Say secure Hi</button>
+    <a href="#" class="secure">Say secure link Hi</a>
+    <button>Harmless button</button>
+
+    <div id="foobar1">
+      FOOBAR
+    </div>
+
+    <div id="foobar2">
+      FOOBAR
+    </div>
+
+
+  </body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script> 
+
+    <script>
+
+      $(document).ready(function(){
+
+        $("button.insecure").click(function(){
+          $.ajax({
+            url: 'http://localhost:8001/level3',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({
+              name: $('#lol').val()
+            , age: 32
+            })}
+          ).done(function(data) {
+            $("#foobar1").html('Hi:' + data.name);
+          });
+        });
+
+      });
+
+    </script>
+  </head>
+  <body>
+
+    <p>Welcome to this XSS test</p>
+
+    <label for="lol">Type your name:</label>
+    <input id="lol" type="text" placeholder="John">
+    <button class="insecure">Say insecure echo</button>
+
+    <div id="foobar1">
+      FOOBAR
+    </div>
+
+  </body>
+</html>

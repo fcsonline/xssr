@@ -74,6 +74,14 @@ request({url: program.url}, function (error, response, body) {
     // Listener to execute the test suite after load all the page
     window.addEventListener('load',  function (a, b, c) {
       var step = 0;
+
+      // TODO: Future ajax interception
+      // $.ajax({
+      //   beforeSend: function (xhr, s) {
+      //     s.data += "&newProp=newValue";
+      //   }
+      // });
+
       window.$('input[type=text]').each(function () {
         window.$(this).val('<script>xss(' + step + '); </script>');
         steps.push(this);

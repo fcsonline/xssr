@@ -12,7 +12,9 @@
     "jsdom": "~0.8.6",
     "request": "~2.27.0",
     "commander": "~2.0.0",
-    "jsfuck": "~0.1.0"
+    "jsfuck": "~0.1.0",
+    "underscore": "~1.5.2",
+    "express": "~3.4.0"
   },
   "repository": {
     "type": "git",

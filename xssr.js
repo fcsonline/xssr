@@ -25,12 +25,12 @@ if (!program.url) {
 
 program.events = program.events.split(',');
 
-var issues = [];
+var issues = []
+  , steps = [];
 
-function addVulnerability(target, step, error) {
+function addVulnerability(step_id, error) {
   issues.push({
-    target: target
-  , step: step
+    target: steps[+step_id]
   , stack: error.stack
   });
 }
@@ -63,8 +63,8 @@ request({url: program.url}, function (error, response, body) {
     //window = document.parentWindow;
 
     // Handle to detect XSS issues
-    window.xss = function (target, step) {
-      addVulnerability(target, step, new Error());
+    window.xss = function (step_id) {
+      addVulnerability(step_id, new Error());
     };
 
     window.onerror = function (errorMsg, url, lineNumber) {
@@ -73,8 +73,11 @@ request({url: program.url}, function (error, response, body) {
 
     // Listener to execute the test suite after load all the page
     window.addEventListener('load',  function (a, b, c) {
-
-      window.$('input[type=text]').val('<script>xss(this, "STEP1"); </script>');
+      var step = 0;
+      window.$('input[type=text]').each(function () {
+        window.$(this).val('<script>xss(' + step + '); </script>');
+        steps.push(this);
+      });
 
       console.log('Checking ' + window.$(program.tags).length + ' DOM elements...\n');
 

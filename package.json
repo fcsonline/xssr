@@ -1,0 +1,24 @@
+{
+  "name": "xssr",
+  "description": "xss spyder",
+  "version": "0.0.1",
+  "author": "Ferran Basora <fcsonline@gmail.com>",
+  "contributors": [],
+  "keywords": [
+    "xss",
+    "bot"
+  ],
+  "dependencies": {
+    "jsdom": "~0.8.6",
+    "request": "~2.27.0",
+    "commander": "~2.0.0",
+    "jsfuck": "~0.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/fcsonline/xssr.git"
+  },
+  "engines": {
+    "node": ">= 0.8.0"
+  }
+}

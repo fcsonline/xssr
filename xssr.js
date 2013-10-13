@@ -1,13 +1,15 @@
-#!/usr/bin/env node
-
 var program = require('commander')
   , request = require('request')
-  , jsdom = require("jsdom");
+  , jsdom = require("jsdom")
+  , _ = require("underscore");
+
+var default_events = 'click,keyup,keydown,mouseover,mousein,mouseout';
 
 program
   .version('0.0.1')
   .option('-u, --url [url]', 'URL to be scanned')
   .option('-t, --tags [tags]', 'HTML tags with handler to be scanned', 'button,a')
+  .option('-e, --events [events]', 'Javascript handler events to be scanned', default_events)
   .parse(process.argv);
 
 jsdom.defaultDocumentFeatures = {
@@ -21,6 +23,7 @@ if (!program.url) {
   throw new Error('The url argument is mandatory');
 }
 
+program.events = program.events.split(',');
 
 var issues = [];
 
@@ -76,9 +79,12 @@ request({url: program.url}, function (error, response, body) {
       console.log('Checking ' + window.$(program.tags).length + ' DOM elements...\n');
 
       window.$(program.tags).each(function () {
-        var handlers = window.$._data(this, 'events') || {}
-          , handlers_keys = Object.keys(handlers)
+        var handlers
+          , handlers_keys
           , message;
+
+        handlers = window.$._data(this, 'events') || {};
+        handlers_keys = _.intersection(Object.keys(handlers), program.events);
 
         message = ' · Checking element "' + window.$(this).html() + '" with ';
 
